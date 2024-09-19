@@ -6,7 +6,7 @@ import (
 	"errors"
 
 	"github.com/Microsoft/go-winio/pkg/guid"
-	"github.com/Microsoft/hcsshim/internal/regstate"
+	"github.com/Microsoft/hnslib/internal/regstate"
 )
 
 const (

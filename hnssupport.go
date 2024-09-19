@@ -1,9 +1,9 @@
 //go:build windows
 
-package hcsshim
+package hnslib
 
 import (
-	"github.com/Microsoft/hcsshim/internal/hns"
+	"github.com/Microsoft/hnslib/internal/hns"
 )
 
 type HNSSupportedFeatures = hns.HNSSupportedFeatures

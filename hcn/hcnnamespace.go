@@ -9,10 +9,10 @@ import (
 	"syscall"
 
 	"github.com/Microsoft/go-winio/pkg/guid"
-	icni "github.com/Microsoft/hcsshim/internal/cni"
-	"github.com/Microsoft/hcsshim/internal/interop"
-	"github.com/Microsoft/hcsshim/internal/regstate"
-	"github.com/Microsoft/hcsshim/internal/runhcs"
+	icni "github.com/Microsoft/hnslib/internal/cni"
+	"github.com/Microsoft/hnslib/internal/interop"
+	"github.com/Microsoft/hnslib/internal/regstate"
+	"github.com/Microsoft/hnslib/internal/runhcs"
 	"github.com/sirupsen/logrus"
 )
 

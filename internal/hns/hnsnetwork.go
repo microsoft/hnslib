@@ -92,7 +92,7 @@ func GetHNSNetworkByName(networkName string) (*HNSNetwork, error) {
 // Create Network by sending NetworkRequest to HNS.
 func (network *HNSNetwork) Create() (*HNSNetwork, error) {
 	operation := "Create"
-	title := "hcsshim::HNSNetwork::" + operation
+	title := "hnslib::HNSNetwork::" + operation
 	logrus.Debugf(title+" id=%s", network.Id)
 
 	for _, subnet := range network.Subnets {
@@ -111,7 +111,7 @@ func (network *HNSNetwork) Create() (*HNSNetwork, error) {
 // Delete Network by sending NetworkRequest to HNS
 func (network *HNSNetwork) Delete() (*HNSNetwork, error) {
 	operation := "Delete"
-	title := "hcsshim::HNSNetwork::" + operation
+	title := "hnslib::HNSNetwork::" + operation
 	logrus.Debugf(title+" id=%s", network.Id)
 
 	return HNSNetworkRequest("DELETE", network.Id, "")
@@ -128,7 +128,7 @@ func (network *HNSNetwork) NewEndpoint(ipAddress net.IP, macAddress net.Hardware
 
 func (network *HNSNetwork) CreateEndpoint(endpoint *HNSEndpoint) (*HNSEndpoint, error) {
 	operation := "CreateEndpoint"
-	title := "hcsshim::HNSNetwork::" + operation
+	title := "hnslib::HNSNetwork::" + operation
 	logrus.Debugf(title+" id=%s, endpointId=%s", network.Id, endpoint.Id)
 
 	endpoint.VirtualNetwork = network.Id
@@ -137,7 +137,7 @@ func (network *HNSNetwork) CreateEndpoint(endpoint *HNSEndpoint) (*HNSEndpoint, 
 
 func (network *HNSNetwork) CreateRemoteEndpoint(endpoint *HNSEndpoint) (*HNSEndpoint, error) {
 	operation := "CreateRemoteEndpoint"
-	title := "hcsshim::HNSNetwork::" + operation
+	title := "hnslib::HNSNetwork::" + operation
 	logrus.Debugf(title+" id=%s", network.Id)
 	endpoint.IsRemoteEndpoint = true
 	return network.CreateEndpoint(endpoint)

@@ -5,7 +5,7 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/Microsoft/hcsshim/internal/logfields"
+	"github.com/Microsoft/hnslib/internal/logfields"
 	"github.com/sirupsen/logrus"
 	"go.opencensus.io/trace"
 )

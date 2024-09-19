@@ -6,8 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/Microsoft/hcsshim/internal/hcserror"
-	"github.com/Microsoft/hcsshim/internal/interop"
+	"github.com/Microsoft/hnslib/internal/interop"
 	"github.com/sirupsen/logrus"
 )
 
@@ -17,7 +16,7 @@ func hnsCallRawResponse(method, path, request string) (*hnsResponse, error) {
 
 	err := _hnsCall(method, path, request, &responseBuffer)
 	if err != nil {
-		return nil, hcserror.New(err, "hnsCall ", "")
+		return nil, NewHnsError(err, "hnsCall ", "")
 	}
 	response := interop.ConvertAndFreeCoTaskMemString(responseBuffer)
 

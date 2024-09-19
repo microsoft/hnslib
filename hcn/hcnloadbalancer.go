@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 
 	"github.com/Microsoft/go-winio/pkg/guid"
-	"github.com/Microsoft/hcsshim/internal/interop"
+	"github.com/Microsoft/hnslib/internal/interop"
 	"github.com/sirupsen/logrus"
 )
 

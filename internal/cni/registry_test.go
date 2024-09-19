@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/Microsoft/go-winio/pkg/guid"
-	"github.com/Microsoft/hcsshim/internal/regstate"
+	"github.com/Microsoft/hnslib/internal/regstate"
 )
 
 func newGUID(t *testing.T) guid.GUID {

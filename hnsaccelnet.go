@@ -1,11 +1,11 @@
 //go:build windows
 
-package hcsshim
+package hnslib
 
 import (
 	"errors"
 
-	"github.com/Microsoft/hcsshim/internal/hns"
+	"github.com/Microsoft/hnslib/internal/hns"
 )
 
 // HNSNnvManagementMacAddress represents management mac address

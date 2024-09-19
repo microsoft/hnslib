@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/sirupsen/logrus"
 
-	"github.com/Microsoft/hcsshim/internal/log"
+	"github.com/Microsoft/hnslib/internal/log"
 )
 
 var (
