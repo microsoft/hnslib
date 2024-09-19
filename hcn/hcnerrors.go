@@ -9,9 +9,8 @@ import (
 	"github.com/sirupsen/logrus"
 	"golang.org/x/sys/windows"
 
-	"github.com/Microsoft/hcsshim/internal/hcs"
-	"github.com/Microsoft/hcsshim/internal/hcserror"
-	"github.com/Microsoft/hcsshim/internal/interop"
+	"github.com/Microsoft/hnslib/internal/hns"
+	"github.com/Microsoft/hnslib/internal/interop"
 )
 
 var (
@@ -56,12 +55,12 @@ const (
 )
 
 type HcnError struct {
-	*hcserror.HcsError
+	*hns.HnsError
 	code ErrorCode
 }
 
 func (e *HcnError) Error() string {
-	return e.HcsError.Error()
+	return e.HnsError.Error()
 }
 
 func CheckErrorWithCode(err error, code ErrorCode) bool {
@@ -86,9 +85,9 @@ func IsNotImplemented(err error) bool {
 
 func new(hr error, title string, rest string) error {
 	err := &HcnError{}
-	hcsError := hcserror.New(hr, title, rest)
-	err.HcsError = hcsError.(*hcserror.HcsError) //nolint:errorlint
-	err.code = ErrorCode(hcserror.Win32FromError(hr))
+	hnsError := hns.NewHnsError(hr, title, rest)
+	err.HnsError = hnsError.(*hns.HnsError) //nolint:errorlint
+	err.code = ErrorCode(hns.Win32FromError(hr))
 	return err
 }
 
@@ -185,8 +184,8 @@ func IsNotFoundError(err error) bool {
 	if e := (RouteNotFoundError{}); errors.As(err, &e) {
 		return true
 	}
-	if e := (&hcserror.HcsError{}); errors.As(err, &e) {
-		return errors.Is(e.Err, hcs.ErrElementNotFound)
+	if e := (&hns.HnsError{}); errors.As(err, &e) {
+		return errors.Is(e.Err, hns.ErrElementNotFound)
 	}
 
 	return false

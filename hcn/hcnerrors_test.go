@@ -11,8 +11,7 @@ import (
 	"github.com/Microsoft/go-winio/pkg/guid"
 	"golang.org/x/sys/windows"
 
-	"github.com/Microsoft/hcsshim/internal/hcs"
-	"github.com/Microsoft/hcsshim/internal/hcserror"
+	"github.com/Microsoft/hnslib/internal/hns"
 )
 
 func TestMissingNetworkByName(t *testing.T) {
@@ -135,21 +134,21 @@ func TestIsNotFoundError(t *testing.T) {
 			isNotFound: true,
 		},
 		{
-			err: &hcserror.HcsError{
-				Err: hcs.ErrElementNotFound,
+			err: &hns.HnsError{
+				Err: hns.ErrElementNotFound,
 			},
 			isNotFound: true,
 		},
 		{
-			err: &hcserror.HcsError{
+			err: &hns.HnsError{
 				Err: windows.ERROR_NOT_FOUND,
 			},
 			isNotFound: true,
 		},
 
 		// not-not-found errors
-		{err: &hcserror.HcsError{Err: hcs.ErrInvalidData}},
-		{err: &hcserror.HcsError{}},
+		{err: &hns.HnsError{Err: hns.ErrInvalidData}},
+		{err: &hns.HnsError{}},
 		{err: fmt.Errorf("random error")},
 		{err: windows.ERROR_SUCCESS},
 	} {

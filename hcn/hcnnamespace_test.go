@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/Microsoft/go-winio/pkg/guid"
-	"github.com/Microsoft/hcsshim/internal/cni"
+	"github.com/Microsoft/hnslib/internal/cni"
 )
 
 func newGUID(t *testing.T) guid.GUID {

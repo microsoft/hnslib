@@ -33,7 +33,7 @@ func HNSNnvManagementMacRequest(method, path, request string) (*HNSNnvManagement
 // Set ManagementMacAddressList by sending "POST" NnvManagementMacRequest to HNS.
 func (nnvManagementMacList *HNSNnvManagementMacList) Set() (*HNSNnvManagementMacList, error) {
 	operation := "Set"
-	title := "hcsshim::nnvManagementMacList::" + operation
+	title := "hnslib::nnvManagementMacList::" + operation
 	logrus.Debugf(title+" id=%s", nnvManagementMacList.MacAddressList)
 
 	jsonString, err := json.Marshal(nnvManagementMacList)
@@ -46,7 +46,7 @@ func (nnvManagementMacList *HNSNnvManagementMacList) Set() (*HNSNnvManagementMac
 // Get ManagementMacAddressList by sending "GET" NnvManagementMacRequest to HNS.
 func GetNnvManagementMacAddressList() (*HNSNnvManagementMacList, error) {
 	operation := "Get"
-	title := "hcsshim::nnvManagementMacList::" + operation
+	title := "hnslib::nnvManagementMacList::" + operation
 	logrus.Debugf(title)
 	return HNSNnvManagementMacRequest("GET", "", "")
 }
@@ -54,7 +54,7 @@ func GetNnvManagementMacAddressList() (*HNSNnvManagementMacList, error) {
 // Delete ManagementMacAddressList by sending "DELETE" NnvManagementMacRequest to HNS.
 func DeleteNnvManagementMacAddressList() (*HNSNnvManagementMacList, error) {
 	operation := "Delete"
-	title := "hcsshim::nnvManagementMacList::" + operation
+	title := "hnslib::nnvManagementMacList::" + operation
 	logrus.Debugf(title)
 	return HNSNnvManagementMacRequest("DELETE", "", "")
 }

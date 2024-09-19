@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/Microsoft/hcsshim"
+	"github.com/Microsoft/hnslib"
 )
 
 const (
@@ -21,11 +21,11 @@ func TestMain(m *testing.M) {
 	os.Exit(m.Run())
 }
 
-func CreateTestNetwork() (*hcsshim.HNSNetwork, error) {
-	network := &hcsshim.HNSNetwork{
+func CreateTestNetwork() (*hnslib.HNSNetwork, error) {
+	network := &hnslib.HNSNetwork{
 		Type: "NAT",
 		Name: NatTestNetworkName,
-		Subnets: []hcsshim.Subnet{
+		Subnets: []hnslib.Subnet{
 			{
 				AddressPrefix:  "192.168.100.0/24",
 				GatewayAddress: "192.168.100.1",
@@ -42,7 +42,7 @@ func TestEndpoint(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	Endpoint := &hcsshim.HNSEndpoint{
+	Endpoint := &hnslib.HNSEndpoint{
 		Name: NatTestEndpointName,
 	}
 
@@ -73,7 +73,7 @@ func TestEndpoint(t *testing.T) {
 }
 
 func TestEndpointGetAll(t *testing.T) {
-	_, err := hcsshim.HNSListEndpointRequest()
+	_, err := hnslib.HNSListEndpointRequest()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -85,7 +85,7 @@ func TestEndpointStatsAll(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	Endpoint := &hcsshim.HNSEndpoint{
+	Endpoint := &hnslib.HNSEndpoint{
 		Name: NatTestEndpointName,
 	}
 
@@ -94,13 +94,13 @@ func TestEndpointStatsAll(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	epList, err := hcsshim.HNSListEndpointRequest()
+	epList, err := hnslib.HNSListEndpointRequest()
 	if err != nil {
 		t.Fatal(err)
 	}
 
 	for _, e := range epList {
-		_, err := hcsshim.GetHNSEndpointStats(e.Id)
+		_, err := hnslib.GetHNSEndpointStats(e.Id)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -113,7 +113,7 @@ func TestEndpointStatsAll(t *testing.T) {
 }
 
 func TestNetworkGetAll(t *testing.T) {
-	_, err := hcsshim.HNSListNetworkRequest("GET", "", "")
+	_, err := hnslib.HNSListNetworkRequest("GET", "", "")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -137,7 +137,7 @@ func TestAccelnetNnvManagementMacAddresses(t *testing.T) {
 	}
 
 	macList := []string{"00-15-5D-0A-B7-C6", "00-15-5D-38-01-00"}
-	newMacList, err := hcsshim.SetNnvManagementMacAddresses(macList)
+	newMacList, err := hnslib.SetNnvManagementMacAddresses(macList)
 
 	if err != nil {
 		t.Fatal(err)
@@ -147,7 +147,7 @@ func TestAccelnetNnvManagementMacAddresses(t *testing.T) {
 		t.Errorf("After Create: Expected macaddress count %d, got %d", 2, len(newMacList.MacAddressList))
 	}
 
-	newMacList, err = hcsshim.GetNnvManagementMacAddresses()
+	newMacList, err = hnslib.GetNnvManagementMacAddresses()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -156,7 +156,7 @@ func TestAccelnetNnvManagementMacAddresses(t *testing.T) {
 		t.Errorf("Get After Create: Expected macaddress count %d, got %d", 2, len(newMacList.MacAddressList))
 	}
 
-	newMacList, err = hcsshim.DeleteNnvManagementMacAddresses()
+	newMacList, err = hnslib.DeleteNnvManagementMacAddresses()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -165,7 +165,7 @@ func TestAccelnetNnvManagementMacAddresses(t *testing.T) {
 		t.Errorf("After Delete: Expected macaddress count %d, got %d", 0, len(newMacList.MacAddressList))
 	}
 
-	newMacList, err = hcsshim.GetNnvManagementMacAddresses()
+	newMacList, err = hnslib.GetNnvManagementMacAddresses()
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -81,7 +81,7 @@ func GetPolicyListByID(policyListID string) (*PolicyList, error) {
 // Create PolicyList by sending PolicyListRequest to HNS.
 func (policylist *PolicyList) Create() (*PolicyList, error) {
 	operation := "Create"
-	title := "hcsshim::PolicyList::" + operation
+	title := "hnslib::PolicyList::" + operation
 	logrus.Debugf(title+" id=%s", policylist.ID)
 	jsonString, err := json.Marshal(policylist)
 	if err != nil {
@@ -93,7 +93,7 @@ func (policylist *PolicyList) Create() (*PolicyList, error) {
 // Delete deletes PolicyList
 func (policylist *PolicyList) Delete() (*PolicyList, error) {
 	operation := "Delete"
-	title := "hcsshim::PolicyList::" + operation
+	title := "hnslib::PolicyList::" + operation
 	logrus.Debugf(title+" id=%s", policylist.ID)
 
 	return PolicyListRequest("DELETE", policylist.ID, "")
@@ -102,7 +102,7 @@ func (policylist *PolicyList) Delete() (*PolicyList, error) {
 // AddEndpoint add an endpoint to a Policy List
 func (policylist *PolicyList) AddEndpoint(endpoint *HNSEndpoint) (*PolicyList, error) {
 	operation := "AddEndpoint"
-	title := "hcsshim::PolicyList::" + operation
+	title := "hnslib::PolicyList::" + operation
 	logrus.Debugf(title+" id=%s, endpointId:%s", policylist.ID, endpoint.Id)
 
 	_, err := policylist.Delete()
@@ -119,7 +119,7 @@ func (policylist *PolicyList) AddEndpoint(endpoint *HNSEndpoint) (*PolicyList, e
 // RemoveEndpoint removes an endpoint from the Policy List
 func (policylist *PolicyList) RemoveEndpoint(endpoint *HNSEndpoint) (*PolicyList, error) {
 	operation := "RemoveEndpoint"
-	title := "hcsshim::PolicyList::" + operation
+	title := "hnslib::PolicyList::" + operation
 	logrus.Debugf(title+" id=%s, endpointId:%s", policylist.ID, endpoint.Id)
 
 	_, err := policylist.Delete()
@@ -144,7 +144,7 @@ func (policylist *PolicyList) RemoveEndpoint(endpoint *HNSEndpoint) (*PolicyList
 // AddLoadBalancer policy list for the specified endpoints
 func AddLoadBalancer(endpoints []HNSEndpoint, isILB bool, sourceVIP, vip string, protocol uint16, internalPort uint16, externalPort uint16) (*PolicyList, error) {
 	operation := "AddLoadBalancer"
-	title := "hcsshim::PolicyList::" + operation
+	title := "hnslib::PolicyList::" + operation
 	logrus.Debugf(title+" endpointId=%v, isILB=%v, sourceVIP=%s, vip=%s, protocol=%v, internalPort=%v, externalPort=%v", endpoints, isILB, sourceVIP, vip, protocol, internalPort, externalPort)
 
 	policylist := &PolicyList{}
@@ -177,7 +177,7 @@ func AddLoadBalancer(endpoints []HNSEndpoint, isILB bool, sourceVIP, vip string,
 // AddRoute adds route policy list for the specified endpoints
 func AddRoute(endpoints []HNSEndpoint, destinationPrefix string, nextHop string, encapEnabled bool) (*PolicyList, error) {
 	operation := "AddRoute"
-	title := "hcsshim::PolicyList::" + operation
+	title := "hnslib::PolicyList::" + operation
 	logrus.Debugf(title+" destinationPrefix:%s", destinationPrefix)
 
 	policylist := &PolicyList{}

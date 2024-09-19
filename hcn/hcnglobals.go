@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/Microsoft/hcsshim/internal/hcserror"
-	"github.com/Microsoft/hcsshim/internal/interop"
+	"github.com/Microsoft/hnslib/internal/hns"
+	"github.com/Microsoft/hnslib/internal/interop"
 	"github.com/sirupsen/logrus"
 )
 
@@ -120,7 +120,7 @@ func hnsCall(method, path, request string, returnResponse interface{}) error {
 
 	err := _hnsCall(method, path, request, &responseBuffer)
 	if err != nil {
-		return hcserror.New(err, "hnsCall", "")
+		return hns.NewHnsError(err, "hnsCall", "")
 	}
 	response := interop.ConvertAndFreeCoTaskMemString(responseBuffer)
 
