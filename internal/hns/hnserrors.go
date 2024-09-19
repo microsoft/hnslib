@@ -5,11 +5,12 @@ package hns
 import (
 	"errors"
 	"fmt"
+	"syscall"
 
 	"golang.org/x/sys/windows"
 )
 
-var(
+var (
 	// ErrElementNotFound is an error encountered when the object being referenced does not exist
 	ErrElementNotFound = syscall.Errno(0x490)
 
