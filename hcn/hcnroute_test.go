@@ -1,5 +1,5 @@
-//go:build windows && integration
-// +build windows,integration
+//go:build windows && integration && featureroutesupport
+// +build windows,integration,featureroutesupport
 
 package hcn
 

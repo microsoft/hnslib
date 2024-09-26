@@ -25,10 +25,10 @@ jobs:
       run: go mod verify
 
     - name: Build
-      run: go build -v ./...
+      run: go build -v -tags=integration ./...
 
     - name: Run go vet
-      run: go vet ./...
+      run: go vet -tags=integration ./...
 
     # TODO: Enable gofmt as this formatter has more diff than expected.
     # - name: Run go fmt
@@ -53,3 +53,6 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    # - name: Test
+    #   run: go test -v -tags=integration ./...
