@@ -23,6 +23,9 @@ type HNSEndpoint = hns.HNSEndpoint
 // HNSEndpointStats represent the stats for an networkendpoint in HNS
 type HNSEndpointStats = hns.EndpointStats
 
+// PolicyList is a structure defining schema for Policy list request
+type PolicyList = hns.PolicyList
+
 // Namespace represents a Compartment.
 type Namespace = hns.Namespace
 
@@ -39,4 +42,9 @@ func GetHNSEndpointStats(endpointName string) (*HNSEndpointStats, error) {
 // HNSListEndpointRequest makes a HNS call to query the list of available endpoints
 func HNSListEndpointRequest() ([]HNSEndpoint, error) {
 	return hns.HNSListEndpointRequest()
+}
+
+// HNSListPolicyListRequest gets all the policy list
+func HNSListPolicyListRequest() ([]PolicyList, error) {
+	return hns.HNSListPolicyListRequest()
 }
