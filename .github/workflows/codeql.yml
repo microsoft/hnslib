@@ -69,7 +69,3 @@ jobs:
       # Run CodeQL analysis
       - name: Run CodeQL Analysis
         uses: github/codeql-action/analyze@v3
-
-      # Upload CodeQL results
-      - name: Upload CodeQL results
-        uses: github/codeql-action/upload-results@v1
