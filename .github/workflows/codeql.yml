@@ -72,4 +72,4 @@ jobs:
 
       # Upload CodeQL results
       - name: Upload CodeQL results
-        uses: github/codeql-action/upload-results@v3
+        uses: github/codeql-action/upload-results@v1
