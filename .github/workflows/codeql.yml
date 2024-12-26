@@ -1,50 +1,75 @@
-name: CodeQL Analysis
+name: "CodeQL Advanced"
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
   pull_request:
-    branches:
-      - main
+    branches: [ "main" ]
+  schedule:
+    - cron: '38 10 * * 3'
 
 jobs:
-  codeql-analysis:
-    name: Analyze with CodeQL
-    runs-on: windows-2022 # Use the correct runner for Windows Server 2022
+  analyze:
+    name: Analyze (${{ matrix.language }})
+    # Use Windows Server 2022 for Go analysis
+    runs-on: ${{ (matrix.language == 'go' && 'windows-2022') }}
+    permissions:
+      # required for all workflows
+      security-events: write
 
+      # required to fetch internal or private CodeQL packs
+      packages: read
+
+      # only required for workflows in private repositories
+      actions: read
+      contents: read
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - language: go
+            build-mode: autobuild
+        # Add other languages to the matrix as needed, e.g., 'c-cpp', 'python', etc.
     steps:
-    # Checkout the repository
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    # Set up Go environment
-    - name: Set up Go
-      uses: actions/setup-go@v3
-      with:
-        go-version: '1.22' # Use your Go version, adjust if necessary
+      # Initialize Go environment for Windows
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: '1.22' # Adjust Go version as needed
 
-    # Cache Go modules to speed up builds
-    - name: Cache Go modules
-      uses: actions/cache@v3
-      with:
-        path: |
-          ~/.cache/go-build
-          ~/.golangci-lint/cache
-        key: ${{ runner.os }}-go-modules-${{ hashFiles('**/go.sum') }}
-        restore-keys: |
-          ${{ runner.os }}-go-modules-
+      # Cache Go modules to speed up builds
+      - name: Cache Go modules
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/.golangci-lint/cache
+          key: ${{ runner.os }}-go-modules-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-modules-
 
-    # Initialize CodeQL
-    - name: Set up CodeQL
-      uses: github/codeql-action/init@v2
-      with:
-        languages: go
+      # Initialize CodeQL
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          build-mode: ${{ matrix.build-mode }}
 
-    # Run CodeQL analysis
-    - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      - name: Verify Dependencies
+        run: go mod verify
 
-    # Upload CodeQL results
-    - name: Upload CodeQL results
-      uses: github/codeql-action/upload-results@v2
+      - name: Build
+        run: go build -v -tags=integration ./...
+
+      # Run CodeQL analysis
+      - name: Run CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      # Upload CodeQL results
+      - name: Upload CodeQL results
+        uses: github/codeql-action/upload-results@v3
