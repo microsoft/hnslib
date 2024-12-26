@@ -5,6 +5,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * 0'
 
 jobs:
   analyze:
@@ -46,9 +48,6 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           build-mode: ${{ matrix.build-mode }}
-
-      - name: Verify Dependencies
-        run: go mod verify
 
       - name: Build
         run: go build -v -tags=integration ./...
