@@ -1,0 +1,21 @@
+name: Windows HNS Integration Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  integration:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Windows container image
+        run: |
+          docker build -f Dockerfile.integration -t hnslib-integration .
+
+      - name: Run integration tests in Windows container
+        run: |
+          docker run --isolation=hyperv --rm hnslib-integration
