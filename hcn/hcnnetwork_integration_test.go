@@ -8,7 +8,19 @@ import (
 	"time"
 )
 
+func cleanNetworks() {
+	// This function can be used to clean up any networks created during tests.
+	networks, err := ListNetworks()
+	if err != nil {
+		return
+	}
+	for _, network := range networks {
+		network.Delete()
+	}
+}
+
 func TestIntegration_CreateAndDeleteNetwork(t *testing.T) {
+	cleanNetworks()
 	networkName := "integration-test-network"
 	network := &HostComputeNetwork{
 		Type: NAT,
