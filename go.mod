@@ -11,6 +11,4 @@ require (
 
 require github.com/stretchr/testify v1.9.0 // indirect
 
-retract (
-    v0.0.15 // Retract v0.0.15 because it's not a valid version
-)
+retract v0.0.15 // Retract v0.0.15 because it's not a valid version
