@@ -1,5 +1,5 @@
-//go:build windows && integration_loadbalancer
-// +build windows,integration_loadbalancer
+//go:build windows && integration
+// +build windows,integration
 
 // TODO: https://github.com/microsoft/hnslib/issues/19
 
