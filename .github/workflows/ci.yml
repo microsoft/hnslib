@@ -54,5 +54,8 @@ jobs:
     - name: Test
       run: go test -v ./...
 
-    # - name: Test
-    #   run: go test -v -tags=integration ./...
+    - name: Test HNS Loadbalancer Integration
+      run: go test -v -tags=integration ./hcn -run="TestCreateDeleteLoadBalancer|TestGetLoadBalancerById|TestListLoadBalancer|TestAddLoadBalancer"
+      
+    - name: Test HNS Loadbalancer Advanced Features
+      run: go test -v -tags=integration ./hcn -run="TestAddDSRLoadBalancer|TestAddILBLoadBalancer|TestLoadBalancerAddRemoveEndpoint"
