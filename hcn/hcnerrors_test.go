@@ -66,10 +66,7 @@ func TestMissingNamespaceById(t *testing.T) {
 }
 
 func TestEndpointAlreadyExistsError(t *testing.T) {
-	testNetwork, err := CreateTestOverlayNetwork()
-	if err != nil {
-		t.Fatal("Failed to create overlay network for setup.", err)
-	}
+	testNetwork := CreateTestOverlayNetworkOrSkip(t)
 	defer testNetwork.Delete() //nolint:errcheck
 	portMappingSetting := PortMappingPolicySetting{
 		Protocol:     17,
