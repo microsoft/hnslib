@@ -8,14 +8,14 @@ on:
 
 jobs:
   integration:
-    runs-on: windows-2022
+    runs-on: windows-2025
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actions/setup-go@v4
         with:
-          go-version: '1.22'
+          go-version: '1.25'
 
       - name: Run integration tests
         run: |

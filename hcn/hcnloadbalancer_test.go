@@ -1,7 +1,5 @@
-//go:build windows && integration_loadbalancer
-// +build windows,integration_loadbalancer
-
-// TODO: https://github.com/microsoft/hnslib/issues/19
+//go:build windows && integration
+// +build windows,integration
 
 package hcn
 
@@ -12,7 +10,10 @@ import (
 )
 
 func TestCreateDeleteLoadBalancer(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
@@ -42,7 +43,10 @@ func TestCreateDeleteLoadBalancer(t *testing.T) {
 }
 
 func TestCreateUpdateDeleteLoadBalancer(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
@@ -66,7 +70,12 @@ func TestCreateUpdateDeleteLoadBalancer(t *testing.T) {
 
 	loadBalancer, err = loadBalancer.Update(loadBalancer.Id)
 	if err != nil {
-		t.Fatal(err)
+		if IsNotImplemented(err) {
+			t.Logf("LoadBalancer Update is not implemented on this version of Windows")
+			return
+		} else {
+			t.Fatal(err)
+		}
 	}
 
 	if len(loadBalancer.HostComputeEndpoints) != 2 {
@@ -77,7 +86,11 @@ func TestCreateUpdateDeleteLoadBalancer(t *testing.T) {
 
 	loadBalancer, err = loadBalancer.Update(loadBalancer.Id)
 	if err != nil {
-		t.Fatal(err)
+		if IsNotImplemented(err) {
+			t.Logf("LoadBalancer Update is not implemented on this version of Windows")
+		} else {
+			t.Fatal(err)
+		}
 	}
 
 	if len(loadBalancer.HostComputeEndpoints) != 1 {
@@ -103,7 +116,10 @@ func TestCreateUpdateDeleteLoadBalancer(t *testing.T) {
 }
 
 func TestGetLoadBalancerById(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
@@ -141,7 +157,10 @@ func TestListLoadBalancer(t *testing.T) {
 }
 
 func TestLoadBalancerAddRemoveEndpoint(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
@@ -190,12 +209,14 @@ func TestLoadBalancerAddRemoveEndpoint(t *testing.T) {
 }
 
 func TestAddLoadBalancer(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
 	}
-
 	loadBalancer, err := AddLoadBalancer([]HostComputeEndpoint{*endpoint}, LoadBalancerFlagsNone, LoadBalancerPortMappingFlagsNone, "10.0.0.1", []string{"1.1.1.2", "1.1.1.3"}, 6, 8080, 80)
 	if err != nil {
 		t.Fatal(err)
@@ -223,7 +244,10 @@ func TestAddLoadBalancer(t *testing.T) {
 }
 
 func TestAddDSRLoadBalancer(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
@@ -265,7 +289,10 @@ func TestAddDSRLoadBalancer(t *testing.T) {
 }
 
 func TestAddILBLoadBalancer(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)

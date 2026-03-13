@@ -98,12 +98,15 @@ func TestListNetwork(t *testing.T) {
 
 func testNetworkPolicy(t *testing.T, policiesToTest *PolicyNetworkRequest) {
 	t.Helper()
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	_ = network.AddPolicy(*policiesToTest)
 
 	//Reload the network object from HNS.
-	network, err := GetNetworkByID(network.Id)
+	network, err = GetNetworkByID(network.Id)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -176,10 +179,13 @@ func TestAddRemoveNetworACLPolicy(t *testing.T) {
 }
 
 func TestNetworkFlags(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	//Reload the network object from HNS.
-	network, err := GetNetworkByID(network.Id)
+	network, err = GetNetworkByID(network.Id)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -5,7 +5,7 @@ package hcn
 
 import (
 	"encoding/json"
-	"testing"
+	"time"
 )
 
 func CreateSubnet(AddressPrefix string, NextHop string, DestPrefix string) *Subnet {
@@ -36,6 +36,7 @@ func cleanup(networkName string) {
 			return
 		}
 	}
+	time.Sleep(2 * time.Second)
 }
 
 func HcnGenerateNATNetwork(subnet *Subnet) *HostComputeNetwork {
@@ -77,18 +78,6 @@ func HcnCreateTestNATNetworkWithSubnet(subnet *Subnet) (*HostComputeNetwork, err
 
 func HcnCreateTestNATNetwork() (*HostComputeNetwork, error) {
 	return HcnCreateTestNATNetworkWithSubnet(GetDefaultSubnet())
-}
-
-func CreateTestOverlayNetworkOrSkip(t *testing.T) *HostComputeNetwork {
-	t.Helper()
-	network, err := CreateTestOverlayNetwork()
-	if err != nil {
-		if IsAdapterNotFoundError(err) {
-			t.Skip("Skipping: overlay network not supported, adapter not found.", err)
-		}
-		t.Fatal(err)
-	}
-	return network
 }
 
 func CreateTestOverlayNetwork() (*HostComputeNetwork, error) {

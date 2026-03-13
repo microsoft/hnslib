@@ -9,7 +9,10 @@ import (
 )
 
 func TestCreateDeleteRoute(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
@@ -39,7 +42,10 @@ func TestCreateDeleteRoute(t *testing.T) {
 }
 
 func TestGetRouteById(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
@@ -82,7 +88,10 @@ func TestListRoutes(t *testing.T) {
 }
 
 func TestRouteAddRemoveEndpoint(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
@@ -124,7 +133,10 @@ func TestRouteAddRemoveEndpoint(t *testing.T) {
 }
 
 func TestAddRoute(t *testing.T) {
-	network := CreateTestOverlayNetworkOrSkip(t)
+	network, err := CreateTestOverlayNetwork()
+	if err != nil {
+		t.Fatal(err)
+	}
 	endpoint, err := HcnCreateTestEndpoint(network)
 	if err != nil {
 		t.Fatal(err)
