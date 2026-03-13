@@ -1,5 +1,6 @@
-//go:build windows && integration
-// +build windows,integration
+//go:build windows && (integration || integration_loadbalancer)
+// +build windows
+// +build integration integration_loadbalancer
 
 package hcn
 
