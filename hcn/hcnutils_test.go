@@ -1,10 +1,11 @@
-//go:build windows && integration
-// +build windows,integration
+//go:build windows
+// +build windows
 
 package hcn
 
 import (
 	"encoding/json"
+	"time"
 )
 
 func CreateSubnet(AddressPrefix string, NextHop string, DestPrefix string) *Subnet {
@@ -35,6 +36,7 @@ func cleanup(networkName string) {
 			return
 		}
 	}
+	time.Sleep(2 * time.Second)
 }
 
 func HcnGenerateNATNetwork(subnet *Subnet) *HostComputeNetwork {
