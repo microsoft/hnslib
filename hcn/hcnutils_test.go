@@ -36,7 +36,12 @@ func cleanup(networkName string) {
 			return
 		}
 	}
-	time.Sleep(2 * time.Second)
+	for i := 0; i < 20; i++ {
+		time.Sleep(500 * time.Millisecond)
+		if _, err := GetNetworkByName(networkName); err != nil {
+			return
+		}
+	}
 }
 
 func HcnGenerateNATNetwork(subnet *Subnet) *HostComputeNetwork {
